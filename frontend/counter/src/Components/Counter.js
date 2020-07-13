@@ -2,24 +2,38 @@ import React from "react"
 import "./Counter.css"
 
 
-function Counter(props) {
-  console.log(props)
-  return(
-    <div class="counter">
-      <h3>Days since, {props.CounterName} </h3>
-      <h1>{props.daysSince}</h1>
-      <button class="reset" variant="primary" onclick="resetCounter()">Reset</button>
-      <button class="delete" variant="primary" onclick="deleteCounter()">Delete</button>
-    </div>
-  )
+class Counter extends React.Component {
+  resetCounter(props) {
+    fetch("http://127.0.0.1:5000/reset", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        counterName: props.counterName,
+        daysSince: props.daysSince
+      })
+    });
+  }
+  deleteCounter(props) {
+    fetch("http://127.0.0.1:5000/delete", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        counterName: props.counterName,
+        daysSince: props.daysSince
+      })
+    });
+  }
+  render() {
+    return(
+      <div class="counter">
+        <h3>Days since, {this.props.counterName} </h3>
+        <h1>{this.props.daysSince}</h1>
+        <button class="reset" variant="primary" onClick={() => this.resetCounter(this.props)}>Reset</button>
+        <button class="delete" variant="primary" onClick={() => this.deleteCounter(this.props)}>Delete</button>
+      </div>
+    )
+  }
 }
 
-function resetCounter() {
-  fetch("http://127.0.0.1:5000/reset")
-}
-
-function deleteCounter() {
-  fetch("http://127.0.0.1:5000/delete")
-}
 
 export default Counter

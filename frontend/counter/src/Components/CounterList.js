@@ -6,22 +6,27 @@ class CounterList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      counters: [],
-    }
+      counters: []
+    };
   }
 
-  UNSAFE_componentDidMount() {
+  componentDidMount() {
     fetch("http://127.0.0.1:5000/")
     .then(response => response.json())
-    .then(data => this.setState({ counters: data}))
+    .then(data => {
+      console.log(data);
+      this.setState({ counters: data})
+     })
   }
 
   render() {
     return (
       <div>
-      {this.state.counters.map((counter) => {
-        console.log(counter);
-      })}
+        {this.state.counters.map(counter => {
+          return(
+            <Counter counterName = {counter.counterName} daysSince = {counter.daysSince} />
+          );
+        })}
       </div>
     )
   }
