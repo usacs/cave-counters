@@ -12,6 +12,7 @@ class Counter extends React.Component {
         daysSince: props.daysSince
       })
     });
+    window.location.reload(false);
   }
   deleteCounter(props) {
     fetch("http://127.0.0.1:5000/delete", {
@@ -22,6 +23,7 @@ class Counter extends React.Component {
         daysSince: props.daysSince
       })
     });
+    window.location.reload(false);
   }
   render() {
     return(
